@@ -7,7 +7,7 @@ node('JDK8') {
          sh 'mvn clean package'
     }  
      stage('archiving test results and artifacts') {
-         junit '**/surefire-reports/*.xml'
+         junit '**/surefire-reports/TEST-com.example.springboot.SpringbootApplicationTests.xml'
          archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
     }
 }
