@@ -1,4 +1,4 @@
-node ('JDK8') {
+node('JDK8') {
      stage('sourcecode') {
         // get code from repo
         git branch: 'main', url: 'https://github.com/DevopsRazak/demo-counter-app.git'
@@ -8,7 +8,7 @@ node ('JDK8') {
      }  
      stage('archiving test results and artifacts') {
         // publish junit results and artifacts
-         junit '/target/surefire-reports/*.xml'
-         archiveArtifacts artifacts: '/target/*.jar', followSymlinks: false
+         junit '/jenkins_root/workspace/project_9/target/surefire-reports/*.xml'
+         archiveArtifacts artifacts: '/jenkins_root/workspace/project_9/target/springboot-1.0.0.jar', followSymlinks: false
      }
 }
