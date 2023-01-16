@@ -1,0 +1,22 @@
+pipeline {
+    agent { label 'JDK8' }
+    triggers { pollSCM('* * * * *') }
+    stages {
+        stage('SourceCode') {
+            steps {
+                git branch: 'main', url: 'https://github.com/DevopsRazak/demo-counter-app.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Archive and Test Results') {
+            steps {
+               junit '**/surefire-reports/TEST-com.example.springboot.SpringbootApplicationTests.xml'
+         archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
+            }
+        }
+    }
+}
