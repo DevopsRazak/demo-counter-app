@@ -8,7 +8,7 @@ node('JDK8') {
     }  
      stage('archiving test results and artifacts') {
         // publish junit results and artifacts
-        junit '**/surefire-reports/*.xml'
-        archiveArtifacts artifacts: '**/*.war', followSymlinks: false
+       junit '/jenkins_root/workspace/project_9/target/surefire-reports/TEST-com.example.springboot.SpringbootApplicationTests.xml '
+       junit '/jenkins_root/workspace/project_9/target/springboot-1.0.0.jar'
     }
 }
