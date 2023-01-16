@@ -1,73 +1,14 @@
-pipeline{
-    
-    agent any 
-    
-    stages {
-        
-        stage('Git Checkout'){
-            
-            steps{
-                
-                script{
-                    
-                    git branch: 'main', url: 'https://github.com/vikash-kumar01/mrdevops_javaapplication.git'
-                }
-            }
-        }
-        stage('UNIT testing'){
-            
-            steps{
-                
-                script{
-                    
-                    sh 'mvn test'
-                }
-            }
-        }
-        stage('Integration testing'){
-            
-            steps{
-                
-                script{
-                    
-                    sh 'mvn verify -DskipUnitTests'
-                }
-            }
-        }
-        stage('Maven build'){
-            
-            steps{
-                
-                script{
-                    
-                    sh 'mvn clean install'
-                }
-            }
-        }
-        stage('Static code analysis'){
-            
-            steps{
-                
-                script{
-                    
-                    withSonarQubeEnv(credentialsId: 'sonar-api') {
-                        
-                        sh 'mvn clean package sonar:sonar'
-                    }
-                   }
-                    
-                }
-            }
-            stage('Quality Gate Status'){
-                
-                steps{
-                    
-                    script{
-                        
-                        waitForQualityGate abortPipeline: false, credentialsId: 'sonar-api'
-                    }
-                }
-            }
-        }
-        
+node('JDK8') {
+     stage('sourcecode') {
+        // get code from repo
+        git branch: 'main', url: 'https://github.com/DevopsRazak/demo-counter-app.git'
+    }
+     stage('packaging the code') {
+         sh 'mvn clean package'
+    }  
+     stage('archiving test results and artifacts') {
+        // publish junit results and artifacts
+       junit '/project_9/target/springboot-1.0.0.jar'
+       archiveArtifacts artifacts: '/project_9/target/*.jar', followSymlinks: false
+    }
 }
