@@ -5,9 +5,5 @@ node ('JDK8') {
      }
      stage('packaging the code') {
          sh 'mvn clean package'
-     }  
-     stage('archiving test results and artifacts') {
-         junit '/target/surefire-reports/*.xml'
-         archiveArtifacts artifacts: '/target/*.jar', followSymlinks: false
      }
 }
