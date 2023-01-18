@@ -14,7 +14,7 @@ pipeline{
                 branch : 'main'
             }
         }
-    }
+    
         stage('build the code') {
             steps {
                 sh script : 'mvn clean package'
@@ -26,6 +26,7 @@ pipeline{
             archiveArtifacts artifacts: '**/*.jar'
         }
         }
+    }
     post {
         success {
            // build is succeded
