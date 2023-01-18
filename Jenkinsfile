@@ -1,13 +1,15 @@
-node('JDK8') {
-     stage('sourcecode') {
-        // get code from repo
+node('JDK8'){
+    stage('source code') {
+        // cloning the repository from git
         git branch: 'main', url: 'https://github.com/DevopsRazak/demo-counter-app.git'
     }
-     stage('packaging the code') {
-         sh 'mvn clean package'
-    }  
-     stage('archiving test results and artifacts') {
-         junit '**/surefire-reports/TEST-com.example.springboot.SpringbootApplicationTests.xml'
-         archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
+    stage('building the code') {
+        // building the code from maven
+        sh 'mvn clean package'
+    }
+    stage('archiving and test results') {
+        // artifacts and test results
+        junit '**/target/surefire-reports/*.xml'
+        archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
     }
 }
