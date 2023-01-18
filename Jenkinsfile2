@@ -8,26 +8,24 @@ pipeline{
         cron('0 * * * *') 
     }
     stages {
-        stage('source code') {
+        stage ('source code') {
             steps {
-                url : https://github.com/DevopsRazak/demo-counter-app.git,
-                branch : main
+                url : 'https://github.com/DevopsRazak/demo-counter-app.git',
+                branch : 'main'
             }
         }
     }
-    stages {
-        stage('build the code') {
+        stage ('build the code') {
             steps {
                 sh 'mvn clean package'
             }
         }
-    }
-    stages {
         stage ('test results and artifacts') {
+            steps{
             junit testResults : 'target/surefire-reports/*.xml'
             archiveArtifacts artifacts: '**/*.jar'
         }
-    }
+        }
     post {
         success {
            // build is succeded
