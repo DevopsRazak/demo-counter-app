@@ -8,19 +8,19 @@ pipeline{
         cron('0 * * * *') 
     }
     stages {
-        stage ('source code') {
+        stage('source code') {
             steps {
               git url : 'https://github.com/DevopsRazak/demo-counter-app.git',
                 branch : 'main'
             }
         }
     }
-        stage ('build the code') {
+        stage('build the code') {
             steps {
                 sh script : 'mvn clean package'
             }
         }
-        stage ('test results and artifacts') {
+        stage('test results and artifacts') {
             steps {
             junit testResults : 'target/surefire-reports/*.xml'
             archiveArtifacts artifacts: '**/*.jar'
