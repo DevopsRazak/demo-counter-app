@@ -10,7 +10,7 @@ pipeline{
     stages {
         stage ('source code') {
             steps {
-                url : 'https://github.com/DevopsRazak/demo-counter-app.git',
+              git url : 'https://github.com/DevopsRazak/demo-counter-app.git',
                 branch : 'main'
             }
         }
