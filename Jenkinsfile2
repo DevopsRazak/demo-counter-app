@@ -31,7 +31,11 @@ pipeline{
         success {
            // build is succeded
            echo " success"
-           mail bcc: '', body: 'Build is succeeded wow!', cc: 'eerazzaq@gmail.com', from: '', replyTo: '', subject: 'build success', to: 'razzaq307abdul@gmail.com'
+           mail bcc: '', body: 'Build is succeeded wow!' "  build_url : ${BUILD_URL} TEST RESULTS : ${RUN_TESTS_DISPLAY_URL}" , 
+           cc: 'eerazzaq@gmail.com', 
+           from: '', replyTo: '', 
+           subject: 'build success' "${JOB_BASE_NAME}: Build ${BUILD_ID} Succeded", 
+           to: 'razzaq307abdul@gmail.com'
         }
         failure {
            // build failed
