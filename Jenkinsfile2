@@ -8,8 +8,7 @@ pipeline{
         cron('0 * * * *') 
     }
     parameters {
-        { choice (name: 'GOAL', choices: ['compile', 'package', 'clean package'], description: 'parameters for user') }
-    }
+         choice (name: 'GOAL', choices: ['compile', 'package', 'clean package'], description: 'parameters for user') }
     stages {
         stage('source code') {
             steps {
