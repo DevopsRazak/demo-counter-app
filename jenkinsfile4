@@ -22,11 +22,11 @@ pipeline {
     post {
         success {
                 echo " Build Success"
-                mail bcc: '', body: '', cc: 'razzaq307abdul@gmail.com', from: '', replyTo: '', subject: 'Build Information', to: 'razzaq307abdul@gmail.com'
+                mail bcc: '', body: 'Build success', cc: 'razzaq307abdul@gmail.com', from: 'razzaq307abdul@gmail.com', replyTo: '', subject: 'Build Information', to: 'razzaq307abdul@gmail.com'
             }
             unsuccessful {
                  echo " Build Unsuccessfull"
-                mail bcc: '', body: '', cc: 'razzaq307abdul@gmail.com', from: '', replyTo: '', subject: 'Build Information', to: 'razzaq307abdul@gmail.com' 
+                 mail bcc: '', body: 'Build success', cc: 'razzaq307abdul@gmail.com', from: 'razzaq307abdul@gmail.com', replyTo: '', subject: 'Build Information', to: 'razzaq307abdul@gmail.com'
             }
         }
     
