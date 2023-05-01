@@ -13,3 +13,20 @@ node('jdk8'){
       junit 'target/surefire-reports/*.xml'
     }
 }
+
+node('jdk11'){
+    stage('source code') {
+        // cloning the git repository
+      git branch: 'main', url: 'https://github.com/DevopsRazak/demo-counter-app.git'  
+    }
+    stage('Building the code') {
+        // building code from maven
+        sh 'mvn compile test package'
+    }
+    stage('archive the artifacts and test results') {
+      // artifacts and test results
+      archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+      junit 'target/surefire-reports/*.xml'
+    }
+}
+
