@@ -1,5 +1,5 @@
 pipeline {
-       agent { node { label 'jdk8' && 'jdk11' } }
+       agent { node { label 'jdk11' } }
 
     stages {
         stage('Source code') {
@@ -21,3 +21,4 @@ pipeline {
     }
 
 }
+
