@@ -22,11 +22,13 @@ pipeline {
     post {
         success {
                 echo " Build Success"
-                mail bcc: '', body: 'Build success', cc: 'razzaq307abdul@gmail.com', from: 'razzaq307abdul@gmail.com', replyTo: '', subject: 'Build Information', to: 'razzaq307abdul@gmail.com'
+             mail bcc: '', body: "BRANCH_NAME: ${BRANCH_NAME} BUILD_ID: ${BUILD_ID} Test Results: ${RUN_TESTS_DISPLAY_URL}", cc: 'razzaq307abdul@gmail.com', from: 'razzaq307abdul@gmail.com', replyTo: '', subject: "${JOB_BASE_NAME}: build ${BUILD_ID} success", to: 'razzaq307abdul@gmail.com'
+ 
             }
             unsuccessful {
                  echo " Build Unsuccessfull"
-                 mail bcc: '', body: 'Build success', cc: 'razzaq307abdul@gmail.com', from: 'razzaq307abdul@gmail.com', replyTo: '', subject: 'Build Information', to: 'razzaq307abdul@gmail.com'
+            mail bcc: '', body: "BRANCH_NAME: ${BRANCH_NAME} BUILD_ID: ${BUILD_ID} Test Results: ${RUN_TESTS_DISPLAY_URL}", cc: 'razzaq307abdul@gmail.com', from: 'razzaq307abdul@gmail.com', replyTo: '', subject: "${JOB_BASE_NAME}: build ${BUILD_ID} failed", to: 'razzaq307abdul@gmail.com'
+
             }
         }
     
