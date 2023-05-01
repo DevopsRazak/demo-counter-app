@@ -19,6 +19,10 @@ pipeline {
             }
         }
     }
+   
+}
+
+pipeline {
     agent { node { label 'jdk11' } }
 
     stages {
@@ -39,4 +43,5 @@ pipeline {
             }
         }
     }
+   
 }
