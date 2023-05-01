@@ -1,0 +1,22 @@
+pipeline {
+    agent { node { label 'jdk8' } }
+
+    stages {
+        stage('Source code') {
+            steps {
+           git branch: 'main', url: 'https://github.com/DevopsRazak/demo-counter-app.git'   
+            }
+        }
+        stage('build') {
+            steps {
+                sh 'mvn compile test package'
+            }
+        }
+        stage('artifacts and test results') {
+            steps {
+            archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+            junit 'target/surefire-reports/*.xml'  
+            }
+        }
+    }
+}
