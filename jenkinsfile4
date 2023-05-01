@@ -19,8 +19,7 @@ pipeline {
             }
         }
     }
-}
-post {
+    post {
         success {
                 echo " Build Success"
             }
@@ -29,5 +28,5 @@ post {
             }
         }
     
-   
+}
 
