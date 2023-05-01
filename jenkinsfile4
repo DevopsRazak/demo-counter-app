@@ -1,3 +1,4 @@
+
 pipeline {
        agent { node { label 'jdk11' } }
 
@@ -18,7 +19,14 @@ pipeline {
             junit 'target/surefire-reports/*.xml'
             }
         }
+        post {
+            success {
+                echo " Build Success"
+            }
+            unsuccessful {
+                 echo " Build Unsuccessfull"
+            }
+        }
     }
 
 }
-
