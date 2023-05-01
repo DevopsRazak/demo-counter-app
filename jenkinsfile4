@@ -20,9 +20,8 @@ pipeline {
         }
     }
 }
-
-        post {
-            success {
+post {
+        success {
                 echo " Build Success"
             }
             unsuccessful {
