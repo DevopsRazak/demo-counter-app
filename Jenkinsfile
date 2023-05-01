@@ -1,4 +1,4 @@
-node('JDK8'){
+node('jdk11'){
     stage('source code') {
         // cloning the repository from git
         git branch: 'main', url: 'https://github.com/DevopsRazak/demo-counter-app.git'
