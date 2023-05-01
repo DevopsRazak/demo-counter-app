@@ -1,11 +1,10 @@
 pipeline {
-  //  agent { node { label 'jdk8 && jdk11' } }
-    agent { label 'jdk8 && jdk11' }
+       agent { node { label 'jdk8' && 'jdk11' } }
 
     stages {
         stage('Source code') {
             steps {
-           git branch: 'main', url: 'https://github.com/DevopsRazak/demo-counter-app.git'   
+           git branch: 'main', url: 'https://github.com/DevopsRazak/demo-counter-app.git'
             }
         }
         stage('build') {
@@ -16,9 +15,9 @@ pipeline {
         stage('artifacts and test results') {
             steps {
             archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
-            junit 'target/surefire-reports/*.xml'  
+            junit 'target/surefire-reports/*.xml'
             }
         }
     }
-   
+
 }
