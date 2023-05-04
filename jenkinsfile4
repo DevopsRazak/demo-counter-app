@@ -16,10 +16,12 @@ pipeline {
            git branch: 'main', url: 'https://github.com/DevopsRazak/demo-counter-app.git'   
             }
         }
-        stage('build') {
+        stage('build the code and sonar analysis') {
             steps {
-                sh 'mvn compile test package'
+                 withSonarQubeEnv('sonar-8.9') {
+                sh 'mvn clean package sonar:sonar'
             }
+         }
         }
         stage('artifacts and test results') {
             steps {
