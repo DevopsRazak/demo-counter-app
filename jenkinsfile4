@@ -27,6 +27,9 @@ pipeline {
             steps{
                 timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: false
+
+                timeout(time: 10, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
             }
           }
         }
