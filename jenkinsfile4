@@ -27,6 +27,7 @@ pipeline {
             steps{
                 timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: false
+            }
           }
         }
         stage('artifacts and test results') {
@@ -48,7 +49,7 @@ pipeline {
 
             }
         }
+
     
 }
-
 
