@@ -36,6 +36,7 @@ pipeline {
                     goals: 'clean install',
                     // Maven options.
                     deployerId: 'demo_app-deployer',
+            )
          }
         }
     //    stage('Quality gate'){
