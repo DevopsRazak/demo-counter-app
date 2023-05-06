@@ -23,7 +23,7 @@ pipeline {
                     serverId: 'jfrog_instance',
                     releaseRepo: 'qtdevops-libs-release-local',
                     snapshotRepo: 'qtdevops-libs-snapshot-local',
-
+                )
         stage('build the code and sonar analysis') {
             steps {
                  withSonarQubeEnv('sonar-8.9') {
@@ -39,6 +39,7 @@ pipeline {
             )
          }
         }
+
         stage('artifacts and test results') {
             steps {
             archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
