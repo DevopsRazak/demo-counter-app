@@ -23,18 +23,19 @@ pipeline {
             }
          }
         }
+        
+        stage('artifacts and test results') {
+            steps {
+            archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+            junit 'target/surefire-reports/*.xml'  
+            }
+        }
         stage('Quality gate'){
             steps{
                 timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true
             }
           }
-        }
-        stage('artifacts and test results') {
-            steps {
-            archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
-            junit 'target/surefire-reports/*.xml'  
-            }
         }
     }
     post {
