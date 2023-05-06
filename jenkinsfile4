@@ -16,31 +16,12 @@ pipeline {
            git branch: 'main', url: 'https://github.com/DevopsRazak/demo-counter-app.git'   
             }
         }
-        stage('Artifactory-Configuration') {
-            steps {
-                rtMavenDeployer (
-                    id: 'spc-deployer',
-                    serverId: 'jfrog_instance',
-                    releaseRepo: 'qtdevops-libs-release-remote',
-                    snapshotRepo: 'qtdevops-libs-snapshot-remote',
-
-                )
-            }
-        }
         stage('build the code and sonar analysis') {
             steps {
                  withSonarQubeEnv('sonar-8.9') {
                 sh 'mvn clean package sonar:sonar'
             }
-            rtMavenRun (
-                    // Tool name from Jenkins configuration.
-                    tool: 'maven_3.6.3',
-                    pom: 'pom.xml',
-                    goals: 'clean install',
-                    // Maven options.
-                    deployerId: 'spc-deployer',
-                )
-           }
+         }
         }
         
         stage('artifacts and test results') {
