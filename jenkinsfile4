@@ -39,13 +39,7 @@ pipeline {
             )
          }
         }
-    //    stage('Quality gate'){
-      //      steps{
-        //        timeout(time: 1, unit: 'HOURS') {
-          //      waitForQualityGate abortPipeline: false
-           // }
-        //  }
-       // }
+    
         stage('artifacts and test results') {
             steps {
             archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
