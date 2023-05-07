@@ -1,0 +1,74 @@
+pipeline {
+       agent { node { label 'jdk11' } }
+       options { 
+        timeout(time: 1, unit: 'HOURS')
+       // retry(2) 
+    }
+    triggers {
+        cron('0 * * * *')
+    }
+    parameters {
+        choice(name: 'GOAL', choices: ['compile', 'package', 'clean package'])
+    }
+    stages {
+        stage('Source code') {
+            steps {
+           git branch: 'main', url: 'https://github.com/DevopsRazak/demo-counter-app.git'   
+            }
+        }
+        stage('Artifactory-Configuration') {
+            steps {
+                rtMavenDeployer (
+                    id: 'jfrog',
+                    serverId: 'jfrog_instance',
+                    releaseRepo: 'qtecomm-libs-release-local',
+                    snapshotRepo: 'qtecomm-libs-snapshot-local',
+
+                )
+            }
+        }
+        stage('build the code and sonar analysis') {
+            steps {
+                 withSonarQubeEnv('sonar-8.9') {
+                sh 'mvn clean package sonar:sonar'
+            }
+            rtMavenRun (
+                    // Tool name from Jenkins configuration.
+                    tool: 'maven_3.6.3',
+                    pom: 'pom.xml',
+                    goals: 'clean install',
+                    // Maven options.
+                    deployerId: 'jfrog',
+                )
+           }
+        }
+        
+        stage('artifacts and test results') {
+            steps {
+            archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+            junit 'target/surefire-reports/*.xml'  
+            }
+        }
+        stage('Quality gate'){
+            steps{
+                timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+            }
+          }
+        }
+    }
+    post {
+        success {
+                echo " Build Success"
+             mail bcc: '', body: "BUILD URL: ${BUILD_URL} BUILD_ID: ${BUILD_ID} Test Results: ${RUN_TESTS_DISPLAY_URL}", cc: 'razzaq307abdul@gmail.com', from: 'razzaq307abdul@gmail.com', replyTo: '', subject: "${JOB_BASE_NAME}: build ${BUILD_ID} success", to: 'razzaq307abdul@gmail.com'
+ 
+            }
+            unsuccessful {
+                 echo " Build Unsuccessfull"
+            mail bcc: '', body: "BUILD URL: ${BUILD_URL} BUILD_ID: ${BUILD_ID} Test Results: ${RUN_TESTS_DISPLAY_URL}", cc: 'razzaq307abdul@gmail.com', from: 'razzaq307abdul@gmail.com', replyTo: '', subject: "${JOB_BASE_NAME}: build ${BUILD_ID} failed", to: 'razzaq307abdul@gmail.com'
+
+            }
+        }
+    
+}
+
